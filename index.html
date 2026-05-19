@@ -25,14 +25,15 @@ body{
 .deco-star{position:fixed;pointer-events:none;font-size:var(--fs,20px);animation:spin-star var(--sd,4s) ease-in-out infinite;z-index:0;}
 @keyframes spin-star{0%,100%{transform:rotate(-15deg) scale(1)}50%{transform:rotate(15deg) scale(1.15)}}
 
-.page{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:24px 16px 52px;}
+.page{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:12px 16px 52px;}
 
-.back-btn{position:absolute;top:20px;left:20px;display:inline-flex;align-items:center;gap:7px;color:#5c7a2e;font-size:13px;font-weight:700;text-decoration:none;border:2px solid #b5d97a;border-radius:24px;padding:7px 16px;background:#f0fde0;transition:all .2s;box-shadow:0 2px 8px rgba(100,160,50,.15);}
+/* ── 버튼을 상단 고정에서 일반 흐름으로 ── */
+.top-row{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:960px;margin-bottom:10px;}
+.back-btn{display:inline-flex;align-items:center;gap:7px;color:#5c7a2e;font-size:13px;font-weight:700;text-decoration:none;border:2px solid #b5d97a;border-radius:24px;padding:7px 16px;background:#f0fde0;transition:all .2s;box-shadow:0 2px 8px rgba(100,160,50,.15);flex-shrink:0;}
 .back-btn:hover{background:#d4f5a0;border-color:#8ac840;transform:translateX(-2px);}
 .back-btn::before{content:"←";font-size:15px;}
-
-.title-wrap{text-align:center;margin:64px 0 10px;}
-.title-badge{display:inline-flex;align-items:center;gap:6px;background:#fff8dc;border:2px solid #ffd84d;color:#c47a00;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:5px 18px;border-radius:30px;margin-bottom:14px;box-shadow:0 2px 8px rgba(255,200,50,.3);}
+.title-badge{display:inline-flex;align-items:center;gap:6px;background:#fff8dc;border:2px solid #ffd84d;color:#c47a00;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:5px 18px;border-radius:30px;box-shadow:0 2px 8px rgba(255,200,50,.3);}
+.title-wrap{text-align:center;margin:10px 0 10px;}
 .title-main{font-size:clamp(32px,7vw,60px);font-weight:900;color:#2d4a1e;line-height:1.1;letter-spacing:-1px;}
 .title-main em{color:#ff7b1c;font-style:normal;}
 .title-sub{font-size:14px;color:#6b8f4a;font-weight:700;margin-top:8px;}
@@ -113,13 +114,11 @@ body{
 .card-cta .arrow{font-size:clamp(12px,1.8vw,16px);transition:transform .2s;}
 .level-card:hover .arrow{transform:translateX(4px);}
 
-/* 태블릿: 마스코트 축소 */
 @media(max-width:700px){
   .mascot-wrap{gap:6px;}
   .mascot-el{width:48px!important;height:52px!important;}
   .mascot-el .msym{font-size:17px;}
 }
-/* 모바일: 1열 */
 @media(max-width:480px){
   .cards-grid{grid-template-columns:1fr;}
   .mascot-wrap{display:none;}
@@ -146,10 +145,13 @@ body{
 
 <div class="page">
 
-  <a class="back-btn" href="https://lm99015-cyber.github.io/main_map/">원소 탐험맵으로</a>
+  <div class="top-row">
+    <a class="back-btn" href="https://lm99015-cyber.github.io/main_map/">원소 탐험맵으로</a>
+    <div class="title-badge">🎮 Element Game Explorer</div>
+    <div style="width:160px;flex-shrink:0;"></div>
+  </div>
 
   <div class="title-wrap">
-    <div class="title-badge">🎮 Element Game Explorer</div>
     <div class="title-main">원소 <em>게임</em> 탐험대!</div>
     <div class="title-sub">어떤 난이도에 도전할까요? 골라보세요 🔥</div>
   </div>
