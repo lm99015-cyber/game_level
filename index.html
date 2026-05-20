@@ -29,9 +29,20 @@ body{
 
 /* ── 버튼을 상단 고정에서 일반 흐름으로 ── */
 .top-row{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:960px;margin-bottom:10px;}
-.back-btn{display:inline-flex;align-items:center;gap:7px;color:#5c7a2e;font-size:13px;font-weight:700;text-decoration:none;border:2px solid #b5d97a;border-radius:24px;padding:7px 16px;background:#f0fde0;transition:all .2s;box-shadow:0 2px 8px rgba(100,160,50,.15);flex-shrink:0;}
-.back-btn:hover{background:#d4f5a0;border-color:#8ac840;transform:translateX(-2px);}
-.back-btn::before{content:"←";font-size:15px;}
+.back-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  color:#3b1a00;font-weight:800;text-decoration:none;
+  border:2px solid #a07010;border-radius:20px;
+  background:linear-gradient(135deg,#e8c84a,#c8960a);
+  transition:all .15s;
+  font-family:'Noto Sans KR',sans-serif;
+  white-space:nowrap;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(140,90,0,0.35);
+  text-shadow:0 1px 0 rgba(255,255,255,0.3);
+  padding:7px 16px;font-size:13px;
+  position:fixed;top:16px;left:16px;z-index:100;
+}
+.back-btn:hover{background:linear-gradient(135deg,#d4a017,#b08010);border-color:#805000;filter:brightness(1.05)}
 .title-badge{display:inline-flex;align-items:center;gap:6px;background:#fff8dc;border:2px solid #ffd84d;color:#c47a00;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:5px 18px;border-radius:30px;box-shadow:0 2px 8px rgba(255,200,50,.3);}
 .title-wrap{text-align:center;margin:10px 0 10px;}
 .title-main{font-size:clamp(32px,7vw,60px);font-weight:900;color:#2d4a1e;line-height:1.1;letter-spacing:-1px;}
@@ -145,13 +156,10 @@ body{
 
 <div class="page">
 
-  <div class="top-row">
-    <a class="back-btn" href="https://lm99015-cyber.github.io/main_map/">원소 탐험맵으로</a>
-    <div class="title-badge">🎮 Element Game Explorer</div>
-    <div style="width:160px;flex-shrink:0;"></div>
-  </div>
+  <a class="back-btn" href="https://lm99015-cyber.github.io/main_map/">🏠 원소탐험맵 (HOME)</a>
 
   <div class="title-wrap">
+    <div class="title-badge">🎮 Element Game Explorer</div>
     <div class="title-main">원소 <em>게임</em> 탐험대!</div>
     <div class="title-sub">어떤 난이도에 도전할까요? 골라보세요 🔥</div>
   </div>
