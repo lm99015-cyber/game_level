@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<!-- 원소 게임존 화면 : 난이도(초급·중급·고급)를 고르는 게임 선택 화면입니다. 카드를 누르면 해당 게임으로 이동합니다.
+     <style>은 디자인을, <body>는 화면 요소를, <script>는 배경 효과와 클릭·등장 애니메이션을 담당합니다. -->
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -6,9 +8,13 @@
 <title>원소 게임존</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
+/* 브라우저 기본 여백 초기화 기능 : 모든 요소의 기본 여백을 0으로 맞추고, 크기 계산 방식을 통일합니다. */
 *{box-sizing:border-box;margin:0;padding:0}
+
+/* 기본 글꼴·넘침 정리 기능 : 글꼴을 정하고 가로 방향 넘침을 막습니다. */
 html,body{width:100%;min-height:100%;font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;}
 
+/* 배경 그라데이션 기능 : 연한 노랑 바탕에 여러 색의 둥근 빛을 깔아 밝은 배경을 만듭니다. */
 body{
   background:#fffbe8;
   background-image:
@@ -18,17 +24,22 @@ body{
     radial-gradient(circle at 80% 75%,rgba(255,160,180,.25) 0%,transparent 35%);
 }
 
+/* 떠오르는 거품 배경 기능 : 배경에서 색색의 거품이 아래에서 위로 떠오르는 효과입니다. */
 .bubbles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .bubble{position:absolute;border-radius:50%;animation:rise var(--d,12s) ease-in infinite;opacity:0;}
 @keyframes rise{0%{transform:translateY(110vh) scale(.5);opacity:0}10%{opacity:var(--op,.6)}90%{opacity:var(--op,.6)}100%{transform:translateY(-10vh) scale(1.1) translateX(var(--drift,0px));opacity:0}}
 
+/* 반짝이는 별 장식 기능 : 화면 곳곳에서 살짝 회전하며 반짝이는 별 장식입니다. */
 .deco-star{position:fixed;pointer-events:none;font-size:var(--fs,20px);animation:spin-star var(--sd,4s) ease-in-out infinite;z-index:0;}
 @keyframes spin-star{0%,100%{transform:rotate(-15deg) scale(1)}50%{transform:rotate(15deg) scale(1.15)}}
 
+/* 화면 공통 틀 기능 : 내용을 세로로 쌓아 가운데로 정렬하는 기본 틀입니다. */
 .page{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:12px 16px 52px;}
 
-/* ── 버튼을 상단 고정에서 일반 흐름으로 ── */
+/* 상단 줄 배치 기능 : 화면 위쪽 줄에 요소를 양 끝으로 벌려 놓습니다. */
 .top-row{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:960px;margin-bottom:10px;}
+
+/* 홈으로 돌아가기 버튼 기능 : 화면 왼쪽 위에 고정된, 원소탐험맵으로 가는 버튼입니다. */
 .back-btn{
   display:inline-flex;align-items:center;gap:5px;
   color:#fff;font-weight:800;text-decoration:none;
@@ -43,13 +54,17 @@ body{
   position:fixed;top:16px;left:16px;z-index:100;
 }
 .back-btn:hover{background:linear-gradient(135deg,#e85a20,#d4501a);border-color:#c04010;filter:brightness(1.05)}
+
+/* 상단 배지 기능 : 제목 위 작은 안내 배지입니다. */
 .title-badge{display:inline-flex;align-items:center;gap:6px;background:#fff8dc;border:2px solid #ffd84d;color:#c47a00;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:5px 18px;border-radius:30px;box-shadow:0 2px 8px rgba(255,200,50,.3);}
+
+/* 제목 기능 : 큰 제목과 부제목의 글씨 스타일입니다. em은 제목 안 강조 글자입니다. */
 .title-wrap{text-align:center;margin:10px 0 10px;}
 .title-main{font-size:clamp(32px,7vw,60px);font-weight:900;color:#2d4a1e;line-height:1.1;letter-spacing:-1px;}
 .title-main em{color:#ff7b1c;font-style:normal;}
 .title-sub{font-size:14px;color:#6b8f4a;font-weight:700;margin-top:8px;}
 
-/* 마스코트 */
+/* 마스코트 원소 기능 : 위아래로 까딱이는 원소 캐릭터들입니다. 마우스를 올리면 살짝 커지고 ::after로 눈(👀)을 붙입니다. */
 .mascot-wrap{display:flex;gap:10px;justify-content:center;align-items:flex-end;margin:20px 0 32px;}
 .mascot-el{width:60px;height:64px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2.5px solid;position:relative;animation:bob var(--bd,2s) ease-in-out infinite;cursor:default;transition:transform .15s;}
 .mascot-el:hover{transform:scale(1.15) rotate(5deg)!important;}
@@ -59,13 +74,14 @@ body{
 .mascot-el .mname{font-size:8px;font-weight:800;margin-top:2px;opacity:.85;}
 .mascot-el::after{content:'👀';font-size:10px;position:absolute;top:5px;right:4px;}
 
+/* 마스코트 색상 기능 : 마스코트 원소(수소·산소·탄소·나트륨·금)별 배경과 테두리 색입니다. */
 .el-h{background:#fff9e6;border-color:#ffd84d;color:#9a6200;}
 .el-o{background:#ffe8e8;border-color:#ff9999;color:#9b2b2b;--bd:2.4s;}
 .el-c{background:#e8f5e8;border-color:#7acc7a;color:#2d6b2d;--bd:1.8s;}
 .el-na{background:#e8f0ff;border-color:#88aaff;color:#2244aa;--bd:2.2s;}
 .el-au{background:#fff3d4;border-color:#ffc040;color:#8b5000;--bd:2.6s;}
 
-/* 카드 */
+/* 난이도 카드 격자 기능 : 난이도 카드 세 개를 가로로 배열하는 격자입니다. */
 .cards-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -75,6 +91,7 @@ body{
   padding:0 8px;
 }
 
+/* 난이도 카드 기능 : 난이도 하나를 나타내는 카드 버튼입니다. 마우스를 올리면 떠오르고, 누르면 살짝 눌립니다. */
 .level-card{
   position:relative;width:100%;border-radius:clamp(14px,2.5vw,24px);overflow:hidden;
   cursor:pointer;text-decoration:none;display:flex;flex-direction:column;align-items:center;
@@ -87,6 +104,7 @@ body{
 .level-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 16px 40px var(--c-shadow);}
 .level-card:active{transform:translateY(-2px) scale(.99);}
 
+/* 난이도별 색상 기능 : 초급(초록)·중급(파랑)·고급(주황) 카드의 색을 각각 정합니다. */
 .card-easy{
   --c-bg:linear-gradient(160deg,#e8fde8 0%,#c8f5c8 60%,#a8edaa 100%);
   --c-border:#5ec45e;--c-shadow:rgba(60,180,60,.25);
@@ -103,17 +121,21 @@ body{
   --c-accent:#b85500;--c-btn:#ff7722;--c-btn-shadow:rgba(255,119,34,.4);
 }
 
+/* 단계 리본 기능 : 카드 왼쪽 위에 비스듬히 붙는 단계 표시 리본입니다. */
 .card-ribbon{position:absolute;top:0;left:0;background:var(--c-btn);color:#fff;font-size:clamp(9px,1.4vw,12px);font-weight:800;letter-spacing:1px;padding:5px 16px 5px 12px;border-bottom-right-radius:12px;clip-path:polygon(0 0,90% 0,100% 100%,0 100%);}
 
+/* 카드 글씨 기능 : 별 표시·제목·난이도 배지·설명 글씨 스타일입니다. desc-highlight는 설명 중 강조 줄입니다. */
 .level-stars{font-size:clamp(13px,2.2vw,18px);margin:6px 0 4px;letter-spacing:2px;}
 .card-title{font-size:clamp(14px,2.5vw,22px);font-weight:900;color:var(--c-accent);margin-bottom:6px;text-align:center;}
 .level-badge{font-size:clamp(9px,1.4vw,11px);font-weight:800;padding:4px clamp(8px,1.5vw,16px);border-radius:20px;background:#fff;border:2px solid var(--c-border);color:var(--c-accent);margin-bottom:clamp(8px,1.5vw,14px);letter-spacing:.3px;white-space:nowrap;}
 .card-desc{font-size:clamp(11px,1.5vw,13px);color:rgba(0,0,0,.65);text-align:center;line-height:1.75;font-weight:600;margin-bottom:clamp(14px,2vw,22px);}
 .card-desc .desc-highlight{display:block;font-size:clamp(13px,2vw,16px);font-weight:900;color:var(--c-accent);margin-bottom:4px;}
 
+/* 카드 태그 기능 : 카드 안에 들어가는 작은 태그들의 모양입니다. */
 .card-tags{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:clamp(10px,1.8vw,20px);}
 .tag{font-size:clamp(8px,1.1vw,10px);font-weight:700;padding:3px clamp(6px,1.1vw,11px);border-radius:10px;background:#fff;border:1.5px solid var(--c-border);color:var(--c-accent);white-space:nowrap;}
 
+/* 도전 버튼 기능 : 카드 안의 '도전!' 버튼입니다. 마우스를 올리면 화살표가 오른쪽으로 움직입니다. */
 .card-cta{
   display:inline-flex;align-items:center;gap:5px;
   background:var(--c-btn);color:#fff;font-size:clamp(11px,1.8vw,14px);font-weight:800;
@@ -125,28 +147,35 @@ body{
 .card-cta .arrow{font-size:clamp(12px,1.8vw,16px);transition:transform .2s;}
 .level-card:hover .arrow{transform:translateX(4px);}
 
+/* 작은 화면 대응 기능 : 700px 이하에서 마스코트 크기를 줄입니다. */
 @media(max-width:700px){
   .mascot-wrap{gap:6px;}
   .mascot-el{width:48px!important;height:52px!important;}
   .mascot-el .msym{font-size:17px;}
 }
+/* 더 작은 화면 대응 기능 : 480px 이하에서 카드를 한 줄로 쌓고 마스코트를 숨깁니다. */
 @media(max-width:480px){
   .cards-grid{grid-template-columns:1fr;}
   .mascot-wrap{display:none;}
 }
 
+/* 카드 장식 원 기능 : 카드 모서리에 반투명한 원을 넣어 꾸미는 장식입니다. */
 .card-deco{position:absolute;border-radius:50%;opacity:.18;pointer-events:none;}
 
+/* 폭죽 효과 기능 : 카드를 누르면 색점이 사방으로 터지는 애니메이션입니다. */
 .particle{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;animation:pop .7s ease-out forwards;}
 @keyframes pop{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--px),var(--py)) scale(0);opacity:0}}
 
+/* 안내 문구 기능 : 화면 아래의 도움말 문구 스타일입니다. */
 .footer-note{margin-top:32px;font-size:13px;color:#4a7a20;text-align:center;font-weight:800;background:#f0fde0;border:1.5px solid #c8e89a;border-radius:20px;padding:10px 24px;}
 </style>
 </head>
 <body>
 
+<!-- 거품 배경 자리 기능 : 자바스크립트가 이 안에 떠오르는 거품들을 채웁니다. -->
 <div class="bubbles" id="bubbles"></div>
 
+<!-- 별 장식 기능 : 화면 곳곳에 고정 배치되는 반짝이는 별 장식들입니다. -->
 <div class="deco-star" style="top:8%;left:6%;--fs:28px;--sd:3s;color:#ffd84d;">✦</div>
 <div class="deco-star" style="top:12%;right:8%;--fs:22px;--sd:4.5s;color:#ff9fe8;animation-delay:.5s;">★</div>
 <div class="deco-star" style="top:40%;left:3%;--fs:18px;--sd:3.5s;color:#88ddff;animation-delay:1s;">◆</div>
@@ -154,16 +183,20 @@ body{
 <div class="deco-star" style="bottom:15%;left:7%;--fs:20px;--sd:3.8s;color:#ffb347;animation-delay:.8s;">★</div>
 <div class="deco-star" style="top:65%;right:4%;--fs:16px;--sd:4s;color:#ff9999;animation-delay:1.5s;">✿</div>
 
+<!-- 화면 틀 기능 : 모든 화면 요소를 담는 가운데 정렬 틀입니다. -->
 <div class="page">
 
+  <!-- 홈 버튼 기능 : 누르면 원소탐험맵(메인 지도)으로 이동합니다. -->
   <a class="back-btn" href="https://lm99015-cyber.github.io/main_map/">🏠 원소탐험맵 (HOME)</a>
 
+  <!-- 제목 영역 기능 : 배지·큰 제목·부제목을 보여 줍니다. -->
   <div class="title-wrap">
     <div class="title-badge">🎮 Element Game Explorer</div>
     <div class="title-main">원소 <em>게임</em> 탐험!</div>
     <div class="title-sub">어떤 난이도에 도전할까요? 골라보세요 🔥</div>
   </div>
 
+  <!-- 마스코트 영역 기능 : 까딱이는 원소 캐릭터 다섯 개를 보여 줍니다. -->
   <div class="mascot-wrap">
     <div class="mascot-el el-h" style="--bd:1.9s;"><span class="mnum">1</span><span class="msym">H</span><span class="mname">수소</span></div>
     <div class="mascot-el el-o" style="width:66px;height:70px;--bd:2.3s;"><span class="mnum">8</span><span class="msym">O</span><span class="mname">산소</span></div>
@@ -172,8 +205,10 @@ body{
     <div class="mascot-el el-na" style="--bd:2.5s;"><span class="mnum">11</span><span class="msym">Na</span><span class="mname">나트륨</span></div>
   </div>
 
+  <!-- 난이도 카드 영역 기능 : 초급·중급·고급 카드 세 개를 보여 줍니다. -->
   <div class="cards-grid">
 
+    <!-- 1단계(초급) 카드 기능 : 누르면 새 탭에서 원소 매칭 게임으로 이동하고, 누르는 순간 폭죽이 터집니다. -->
     <a class="level-card card-easy" href="https://lm99015-cyber.github.io/Element-matching/" onclick="spawnParticles(event,'#5ec45e')">
       <div class="card-deco" style="width:120px;height:120px;background:#3dba3d;bottom:-30px;right:-30px;"></div>
       <div class="card-deco" style="width:60px;height:60px;background:#aaf0aa;top:-15px;left:-15px;"></div>
@@ -185,6 +220,7 @@ body{
       <span class="card-cta">도전! <span class="arrow">→</span></span>
     </a>
 
+    <!-- 2단계(중급) 카드 기능 : 누르면 새 탭에서 원소 조합 게임으로 이동합니다. -->
     <a class="level-card card-medium" href="https://lm99015-cyber.github.io/element_game/" onclick="spawnParticles(event,'#3377ee')">
       <div class="card-deco" style="width:130px;height:130px;background:#3377ee;bottom:-35px;right:-35px;"></div>
       <div class="card-deco" style="width:55px;height:55px;background:#aaccff;top:-12px;left:-12px;"></div>
@@ -196,6 +232,7 @@ body{
       <span class="card-cta">도전! <span class="arrow">→</span></span>
     </a>
 
+    <!-- 3단계(고급) 카드 기능 : 누르면 새 탭에서 원소 연결 게임으로 이동합니다. -->
     <a class="level-card card-hard" href="https://lm99015-cyber.github.io/Element-line/" onclick="spawnParticles(event,'#ff7722')">
       <div class="card-deco" style="width:120px;height:120px;background:#ff7722;bottom:-30px;right:-30px;"></div>
       <div class="card-deco" style="width:55px;height:55px;background:#ffd0a0;top:-12px;left:-12px;"></div>
@@ -209,11 +246,13 @@ body{
 
   </div>
 
+  <!-- 안내 문구 기능 : 게임이 새 탭에서 열린다는 도움말입니다. -->
   <p class="footer-note">💡 각 게임은 새 탭에서 열려요 · 언제든지 난이도를 바꿀 수 있어요!</p>
 
 </div>
 
 <script>
+/* 거품 배경 생성 기능 : 배경에 색색의 거품 28개를 무작위 위치·크기·속도로 만들어 띄웁니다. */
 (function(){
   const wrap=document.getElementById('bubbles');
   const colors=['rgba(255,220,80,.5)','rgba(120,220,100,.45)','rgba(100,180,255,.45)','rgba(255,150,180,.4)','rgba(180,240,160,.45)','rgba(255,200,100,.4)'];
@@ -226,6 +265,7 @@ body{
   }
 })();
 
+/* 폭죽 효과 생성 기능 : 클릭한 위치에서 색점 20개를 사방으로 흩뿌리고, 각 점은 약 0.9초 뒤 사라집니다. main은 누른 카드의 대표 색입니다. */
 function spawnParticles(e,main){
   const x=e.clientX,y=e.clientY;
   const cols=[main,'#ffd84d','#ff9fe8','#88ddff','#a0e87a','#fff'];
@@ -240,11 +280,13 @@ function spawnParticles(e,main){
   }
 }
 
+/* 카드 등장 애니메이션 기능 : 페이지가 열릴 때 난이도 카드들을 하나씩 차례로 떠오르게 합니다. */
 document.querySelectorAll('.level-card').forEach((card,i)=>{
   card.style.cssText+=';opacity:0;transform:translateY(40px) scale(.95);transition:opacity .5s ease,transform .5s cubic-bezier(.34,1.56,.64,1)';
   setTimeout(()=>{card.style.opacity='1';card.style.transform='translateY(0) scale(1)';},350+i*130);
 });
 
+/* 마스코트 멈춤 기능 : 마스코트에 마우스를 올리면 까딱임을 멈추고, 벗어나면 다시 움직입니다. */
 document.querySelectorAll('.mascot-el').forEach(el=>{
   el.addEventListener('mouseenter',function(){this.style.animationPlayState='paused';});
   el.addEventListener('mouseleave',function(){this.style.animationPlayState='running';});
